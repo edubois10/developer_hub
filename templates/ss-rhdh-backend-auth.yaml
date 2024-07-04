@@ -1,7 +1,6 @@
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
   name: rhdh-backend-auth
   namespace: rhdh
 spec:
@@ -9,7 +8,6 @@ spec:
     backend-secret: AQBDd/v4rtB3tubkvsN2sCWQRUw2UoVskvjc6oKutEGLY4SS4t4hsYARh10S0i/n/FjQBwDibONHS5OVDj0P2+DtOi/TJtJ9xQIZCkjhDy755xQelbURiLRUqqZ9s1VONjRmzT3I6Vkng3DzQSCdQFjpXnDHWov3W7xWAa8C7C8mYRVd80wU8woF+/j8SaIA8V6dpEkpTM/3DIOvx/zWDpBelRVHCWAi5bPXAw+oFDQSriC7GLays3JLL2CTgD+U1WW/IxIrRZctNDnKLCWZO/Rf6RopwVrck8mJRbhJR44Yp11SwfwwghYO4ROIU/E4mqtGRrAMN1dlkrN2jO0+vvQY+FGLb+cgg73RWnJcNWB6jsp7igyuJBqWasXzKYY1HfAbtZNuiEzOrvjBAA==
   template:
     metadata:
-      creationTimestamp: null
       name: rhdh-backend-auth
       namespace: rhdh
     type: kubernetes.io/opaque

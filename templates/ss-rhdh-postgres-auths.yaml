@@ -1,7 +1,6 @@
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
   name: rhdh-postgres-auths
   namespace: rhdh
 spec:
@@ -10,7 +9,6 @@ spec:
     postgres-password: AQAtolLf/DcDhiIPcF9mVVwWM50VOUM6382ncu7qRL5K40f7Y9TZ3QXviFT8emQS+uUxDj3zfXGJ8T3opsUFvv6McclQSFUYxyU66GOtfvtsH7nv/T8pZcM8HAYWPRO22ROjjiDPSNieFr2gNQP3oVdcX9N3DGUAMYKsNFsKjdhLe4h1oNZv84kHll5xAYvFii6C6zcsXoUuJVgHzWu5JVLPzCtoFx8S7KVIMYjBZb9J/uWgpFPQxOWnMbNVcaREJRm6ks2ReQYLVCx3Mu/UeygMj5LQplugn36+usud3boVhDlnktjFHZlgWK50bc+kMxlrk2rhIZUR+1tipTieTmORvgtUy5KlwV9uFM36x8WcZpdEDJvrM/15lr8=
   template:
     metadata:
-      creationTimestamp: null
       name: rhdh-postgres-auths
       namespace: rhdh
     type: kubernetes.io/opaque
