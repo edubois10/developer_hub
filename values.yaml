@@ -212,4 +212,4 @@ redhat-developer-hub:
     postgresql:
       enabled: true
       auth:
-        existingSecret: "rhdh-postgres-auth"
+        existingSecret: "rhdh-postgres-auths"
