@@ -1,4 +1,4 @@
-redhat-developer-hub:
+backstage:
   global:
     dynamic:
       includes:
@@ -38,7 +38,7 @@ redhat-developer-hub:
       image:      
         registry: registry.redhat.io
         repository: rhdh/rhdh-hub-rhel9    
-        tag: '1.1-102'
+        tag: '1.2-105.1719294777'
         pullSecrets:
           - ''
       appConfig:

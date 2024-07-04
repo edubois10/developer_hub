@@ -1,3 +1,8 @@
+# Helm
+```
+Helm dependency build
+```
+
 # rhdh
 
 To reset the argocd user password:
