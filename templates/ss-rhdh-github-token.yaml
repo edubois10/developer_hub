@@ -1,0 +1,14 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: rhdh-github-token
+  namespace: rhdh
+spec:
+  encryptedData:
+    github-token: AQCGqtEzWggaqhtI24UuEAHaox8gcx2lhjvHC40U+vkpmzLJzP2e4Hb/75lF2XlJO0768STHmms6pP7CWaUaoWlFCVwGYNOAXnnSbuuqxkrz1Lun6GES1LyehzT+6qALz2Ka4kQLKDo58NUhlq4RV85BKmZaBnceoYAVt2/Kfsxba78QC5YWWUujMFblR0BwmlEZw28z2eFmkahuKUWXSOcC75UmdjERcf/hdfgNgqu6lJlmgWJVAYMD+9v+45BQj+CS3/zBXzpJj3wyzvNG81Rqe3PimKlsD1D+11x8Ls53cwJAIJYZ5k3YBl+HUlZO00M1Xdakfc58GaZIo8PECRWuI7ib8w8h3Mg0/Z8FfqdTTiUTupZH1OamKo3w/1A33t3f77XmFdpy99dIw0TNc8dLu0e4UQX5p0I=
+  template:
+    metadata:
+      name: rhdh-github-token
+      namespace: rhdh
+    type: kubernetes.io/opaque
+

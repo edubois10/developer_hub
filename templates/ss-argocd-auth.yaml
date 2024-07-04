@@ -1,0 +1,15 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: rhdh-argocd-auths
+  namespace: rhdh
+spec:
+  encryptedData:
+    argocd-rhdh-password: AQBz4edKc0fcUk8ryqJ86UV6X0+45GOXqoTuTtmsJd7LTIy0uXe6sAf4XtlmfzTr7pbyFzUOnAYS5p6NL9MinQmsTJmpszU10q/UVl4io4vih9xmGHqY17me83UGF4C3N4xcfwYgI5Hscp5FvUcO9NW3AEtaXijEeJoyXHIBBvoGtnVe9AouMCvhizfBwuDZ7j+stA9BT1AcHfk2QUxtfP9899dKWRwtfNhYbvRmwN0kJVRRy6evjJED/NV7400Rjm/MkZ39Z+1HlrgJtuB1jgfzekYkUDpHjrgQziWZGy96Z/+K68t6Fvb45QnzucAY0hEuUglhAE6dSaSTaYFnbnQFp76GnrLkrB4ulrTiqCAeWsX8Oe33lrr2/S8FBzAO68TZWc2xuD6vG3AyjQvfP0Ii
+    argocd-username: AQAEEUVW1WI77IKlp+ml1K+cqqJVh0jHiBBzAqW5Oy7YN9bcNVybYwIjBV+ZWFtKBNmwW+ys2ql9EGnz79c/NWj+JKKyGcY5FOmGW+FpQVfs7xw0zngA+iO2pElASe2gFGsdIbIt0oVmbsKfrLFi3NMoXrmTJDahsqd7SyEGUumB4wIpNxc6WPXm4ScFpaO4acalT8+fAGhE4x7yuaH7HCCMXKyR2vXss/xiV35ik67A4zwNq+X1X0+GPu3d0qnkqEa3mEpcWTcPGS9TSmKAf3y7sSbH4fGcOSCXKp0mEKIS7cwyj2Vha2nyRpEouAmadm5YLV0e58Z3Rt9G2iTTdOi6SKPFXXGEyGDsln/ORKQ6QeHom6lk
+  template:
+    metadata:
+      name: rhdh-argocd-auths
+      namespace: rhdh
+    type: kubernetes.io/opaque
+

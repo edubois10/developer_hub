@@ -1,0 +1,215 @@
+redhat-developer-hub:
+  global:
+    dynamic:
+      includes:
+        # -- List of dynamic plugins included inside the `janus-idp/backstage-showcase` container image, some of which are disabled by default.
+        # This file ONLY works with the `janus-idp/backstage-showcase` container image.
+        - 'dynamic-plugins.default.yaml'
+
+      # -- List of dynamic plugins, possibly overriding the plugins listed in `includes` files.
+      plugins:
+        - package: ./dynamic-plugins/dist/backstage-plugin-techdocs
+          disabled: false
+        - package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
+          disabled: false
+        #- package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-bitbucket-server-dynamic
+        #  disabled: false
+        #- package: ./dynamic-plugins/dist/backstage-plugin-scaffolder-backend-module-bitbucket-server-dynamic
+        #  disabled: false
+        - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
+          disabled: false
+        - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd
+          disabled: false
+        #- package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+        #  disabled: false
+        #- package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+        #  disabled: false
+        #- package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-topology
+        #  disabled: false
+        #- package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-tekton
+        #  disabled: false
+    auth:    
+      backend:
+        existingSecret: "rhdh-backend-auth"    
+        enabled: true 
+    clusterRouterBase: apps.cluster-dvrgh.dynamic.redhatworkshops.io
+  upstream:  
+    backstage:
+      image:      
+        registry: registry.redhat.io
+        repository: rhdh/rhdh-hub-rhel9    
+        tag: '1.1-102'
+        pullSecrets:
+          - ''
+      appConfig:
+        # Allowed Hosts
+        reading:
+          allow:
+            - host: '*.redhatworkshops.io'
+        #aws:
+        #  accounts:
+        #    - accountId: techdocs
+        #      accessKeyId: ${TECHDOCS_AWSS3_ACCESS_KEY_ID_CREDENTIAL}
+        #      secretAccessKey: ${TECHDOCS_AWSS3_SECRET_ACCESS_KEY_CREDENTIAL}
+        # Techdocs plugin configuration
+        techdocs: 
+          generator:
+            runIn: local
+          builder: local
+          publisher:
+            type: local
+            #type: awsS3
+            #awsS3:
+            #  bucketName: rhdh-techdocs
+            #  s3ForcePathStyle: true
+            #  endpoint: https://${AWS_S3_ENDPOINT}
+            #  accountId: techdocs
+
+        # Integrations
+        integrations:
+          github:
+            - host: github.com
+              token: ${GITHUB_TOKEN}
+
+        # Oauth Proxy
+        #auth:
+        #  providers:
+        #    oauth2Proxy: {}
+
+        #signInPage: oauth2Proxy
+
+        # Catalog plugin configuration
+        catalog:
+          rules:
+            - allow: [Component, System, API, Template, Location, Resource, User, Group, Domain]
+          providers:
+            bitbucketServer:
+              default: # identifies your ingested dataset
+                host: 'github.com/edubois10'
+                catalogPath: /catalog-info.yaml # default value
+                filters: # optional
+                  projectKey: '*' # optional; RegExp
+                schedule: # same options as in TaskScheduleDefinition
+                  # supports cron, ISO duration, "human duration" as used in code
+                  frequency: { minutes: 5 }
+                  # supports ISO duration, "human duration" as used in code
+                  timeout: { minutes: 3 }
+        # ArgoCD plugin
+        argocd:
+          username: admin
+          password: PaYueGniKLrvC2507tSy6bgAmoNfzMUd
+          waitCycles: 25
+          appLocatorMethods:
+            - type: 'config'
+              instances:
+                - name: rhdh-gitops-d
+                  url: https://openshift-gitops-server-openshift-gitops.apps.cluster-dvrgh.dynamic.redhatworkshops.io
+                  #token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcmdvY2QiLCJzdWIiOiJhbGljZTphcGlLZXkiLCJuYmYiOjE3MTgwMDkxNjUsImlhdCI6MTcxODAwOTE2NSwianRpIjoiYzU5M2FkMGItNWJlZS00ODNjLTkyNzQtMGVmY2UzNDllYmE4In0.aL8N9KSvGOrNwVO-hJVkXMIbDRDhnqzmVwu_zwfex6Y
+                
+        # Kubernetes Plugin
+        #kubernetes:
+        #  serviceLocatorMethod:
+        #    type: "multiTenant"
+        #  clusterLocatorMethods:
+        #    - type: "config"
+        #      clusters:
+        #        - name: test
+        #          url: https://api.cluster-l5sfk.dynamic.redhatworkshops.io:6443
+        #          authProvider: "serviceAccount"
+        #          skipTLSVerify: true
+        #          serviceAccountToken: ${KUBERNETES_TOKEN}
+
+      extraEnvVars:
+        # Trust self Signed certificates
+        #- name: LOG_LEVEL
+        #  value: debug
+        # Trust self Signed certificates
+        - name: NODE_TLS_REJECT_UNAUTHORIZED
+          value: '0'
+        - name: BACKEND_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: backend-secret
+              name: '{{ include "janus-idp.backend-secret-name" $ }}'
+        - name: POSTGRESQL_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: postgres-password
+              name: rhdh-postgres-auth
+        - name: GITHUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: github-token
+              name: rhdh-github-token
+        - name: ARGOCD_USER
+          valueFrom:
+            secretKeyRef:
+              key: argocd-username
+              name: rhdh-argocd-auths
+        - name: ARGOCD_RHDH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: argocd-rhdh-password
+              name: rhdh-argocd-auths
+        - name: KUBERNETES_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: token
+              name: rhdh-kubernetes-token
+        #- name: AWS_S3_ENDPOINT
+        #  valueFrom:
+        #    secretKeyRef:
+        #      key: s3_endpoint
+        #      name: rhdh-storage-secrets
+        #- name: TECHDOCS_AWSS3_ACCESS_KEY_ID_CREDENTIAL
+        #  valueFrom:
+        #    secretKeyRef:
+        #      key: access_key
+        #      name: rhdh-storage-secrets
+        #- name: TECHDOCS_AWSS3_SECRET_ACCESS_KEY_CREDENTIAL
+        #  valueFrom:
+        #    secretKeyRef:
+        #      key: secret_access_key
+        #      name: rhdh-storage-secrets
+      extraVolumeMounts:
+        # The initContainer below will install dynamic plugins in this volume mount.
+        - name: dynamic-plugins-root
+          mountPath: /opt/app-root/src/dynamic-plugins-root
+        #- name: rhdh-tls #Oauth
+        #  mountPath: /tmp/fakepath
+
+      extraVolumes:
+        # -- Ephemeral volume that will contain the dynamic plugins installed by the initContainer below at start.
+        - name: dynamic-plugins-root
+          ephemeral:
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                resources:
+                  requests:
+                    # -- Size of the volume that will contain the dynamic plugins. It should be large enough to contain all the plugins.
+                    storage: 2Gi
+        #- name: rhdh-tls #Oauth
+        #  secret:
+        #    defaultMode: 420
+        #    secretName: rhdh-tls
+
+        # Volume that will expose the `dynamic-plugins.yaml` file from the `dynamic-plugins` config map.
+        # The `dynamic-plugins` config map is created by the helm chart from the content of the `global.dynamic` field.
+        - name: dynamic-plugins
+          configMap:
+            defaultMode: 420
+            name: dynamic-plugins
+            optional: true
+        # Optional volume that allows exposing the `.npmrc` file (through a `dynamic-plugins-npmrc` secret)
+        # to be used when running `npm pack` during the dynamic plugins installation by the initContainer.
+        - name: dynamic-plugins-npmrc
+          secret:
+            defaultMode: 420
+            optional: true
+            secretName: dynamic-plugins-npmrc
+    postgresql:
+      enabled: true
+      auth:
+        existingSecret: "rhdh-postgres-auth"

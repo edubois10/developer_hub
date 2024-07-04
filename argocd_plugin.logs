@@ -1,0 +1,12 @@
+2024-06-10T08:41:35.611Z argocd error failed to get argo token: https://rhdh-redhat-developer-hub-rhdh.apps.cluster-dvrgh.dynamic.redhatworkshops.io
+2024-06-10T08:41:35.611Z argocd error Error getting token from Argo Instance rhdh-gitops-d: invalid json response body at https://rhdh-redhat-developer-hub-rhdh.apps.cluster-dvrgh.dynamic.redhatworkshops.io/api/v1/session reason: Unexpected token < in JSON at position 0
+
+
+User Alice without enough privileged:
+error Error getting Argo App Data from Argo Instance rhdh-gitops-d: Request failed with 403 Error
+
+````
+p, role:alice, applications, get, default/*, allow
+# Assign the user `alice` to the role `alice`
+g, alice, role:alice
+````
