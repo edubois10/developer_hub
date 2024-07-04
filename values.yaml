@@ -135,7 +135,7 @@ redhat-developer-hub:
           valueFrom:
             secretKeyRef:
               key: postgres-password
-              name: rhdh-postgres-auth
+              name: rhdh-postgres-auths
         - name: GITHUB_TOKEN
           valueFrom:
             secretKeyRef:
