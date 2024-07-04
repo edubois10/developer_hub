@@ -1,14 +1,16 @@
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
+  creationTimestamp: null
   name: rhdh-postgres-auth
   namespace: rhdh
 spec:
   encryptedData:
-    password: AQAau7Des1EO72r2d5PdZubSgvJDSr+o2sbJ35s2Eg4Et4LFuXzY6jlpasGW1bb7CGQtJucH2RJNKWgpJMlQo7pKKwPD6wS/gLTiEbHV80WuFGkce4kwAvdMp7eRhIGJ+8ie0zsI7vXWuc9Qlfo8Xkw5J1/dCjVFKKQyzUF/AoZh6iPxaseDFDgr6E1dRz73gXfkdpHC2/frIHfe0sR+Y6oVY8IVUkuPIbVXK7VjXVsstWowPNTrncSiNR9zVYDfb5w/hgLURkrfV2UurGWieOqJ7D+V+KEREsy2uwdoWuw4tcc6Yh77CQFBRVIX9o/NjuFVxzdUn0xoZltMxrklwO14qjoqPmcrC2LyYTrsKAehtO4CY110Ump9/owMZw==
-    postgres-password: AQBAV7/f8U4BEXpbBCKokaqAQ+WpLTXojUfD/HNgaKsFL4zkc9ZIBJTbq36FXnG9rrLOTbjXHtHZPjpw2F+9eFAJII+fOjBnrsvJwpvxmDNjIDIBmg5O1hU2DQL8EfnOIUX2cpT4D6FtXbwFl8UNZ6kQ9IG7weqlykm3avIU12hQVf3wOGgsZ5EKBmW52Voz4EDv0i++IhyP/ey7QII3Uw6eXyqsYq51nxY/Bzlau4cFiDYrvusr1eZVP/M/v4XeJKLbbH8LSWf6vbjP8RbaOJw1ZaSchmqHm4xNesLYll9F1aDBi6B6yzR24AfrGoKSRBD4/Pnzdhv0goMlQWpQtGuUzWj7USvvNoWrX9ZoYjcZcmZhxU21vgaUyTI=
+    password: AQBZkz/AqgNq7zfrdIi+A0i1WuDelffW51Npf4qsft92XBZNFIMKg5vzjcmO6yXIZURGacWEEBjDp3YQOrx/nrgOildZzG1hhcSqF/fmr3SPd5zWyuHsVTTvOyAaFQiqFY//BsZWSTQRKDQL1WUOlKUy/XV30ZC1EvWQaOMlkeQKRfeKyFjUQSrZZw4fvE3AUJ4KoTv2pTC5IcygMOzUyINV8eos/B6Jv9SFu7aXJWd5sZdyBkS2v/qm1laJX05OH9Z9CyaDLIMSJAlySAWuKJosmX/OEcOrz07+Lk9/BQHhcKNONrB+p7ui9bPK0s7WSKAmXy6naWwrcGA+/xG0winaz8kDPn+6dw8/VLCMLBsHp0hsGIWVcyesFjR+KQ==
+    postgres-password: AQAGYQvkAC+zLvQ/rDRfgvye/YQTs/7EF1FQCQEHE4pLM7Hhhg1HCjpVSTkf6wUIKiOAcIAjQAPmElAIPNKCk8sLR4tW2MPVs1LJ3UdpFlpi2gJJRXUCYGVH74yhX+WPjFfGCT5gitjEZYVRnFBG3LDMZWb4wg/xtWSGTYk8kljVUIC/Pj/Ug2NqnCsv2q9wY8PMCEBSSEBv6691U5me9W0GmOuNBKejqBr/mANynDStmOms587+0tcdDoCDJ+UNs247ry3hj3nCKmADUKRkSGJz7IShTxm20ppPFod06bA836mwmNPY3bWJeewiJdR3hQUlMMgIy4Qv9uMOhPCiJOXpBeMLV8GzTDr3aybO93pIBxgv1dyTbyr/O4I=
   template:
     metadata:
+      creationTimestamp: null
       name: rhdh-postgres-auth
       namespace: rhdh
     type: kubernetes.io/opaque
