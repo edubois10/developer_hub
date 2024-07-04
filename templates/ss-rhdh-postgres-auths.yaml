@@ -1,0 +1,17 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: rhdh-postgres-auths
+  namespace: rhdh
+spec:
+  encryptedData:
+    password: AQB4jGAF/5oVP8s1HmU+B91+OQ7N2Qo59OvMYcNfoSzeLUlVbjnWXLzvvUfrHjkt43TbTnEH0zTrbenqmJhpkIavZ8q7zSoHgrf78mslTLqR1H6kqt2tY3IVNKJTULIGXlW5eHu7rsLoHrVgXgbJm4EXmWkXZa5y0LN7BcEjjC8GXevfVA+fRG9CqKagICs2JoECdxolLpfngw9YionrMwEFCVkcNs6PZzJhuolQm/GmR0JTk6FBf1nx+mABlFPenowh2H6WjxXEG1eN7lNH4p3ocXkc5pVemK7Cs1oe2kgEPnyidXrTgHL1MUETxpR8qMxfZ3xfScx6diCaK0DgICpa7fmU+Zf8051ifcRdPe2T4CmWAEdtg3GPOFG0Jw==
+    postgres-password: AQAtolLf/DcDhiIPcF9mVVwWM50VOUM6382ncu7qRL5K40f7Y9TZ3QXviFT8emQS+uUxDj3zfXGJ8T3opsUFvv6McclQSFUYxyU66GOtfvtsH7nv/T8pZcM8HAYWPRO22ROjjiDPSNieFr2gNQP3oVdcX9N3DGUAMYKsNFsKjdhLe4h1oNZv84kHll5xAYvFii6C6zcsXoUuJVgHzWu5JVLPzCtoFx8S7KVIMYjBZb9J/uWgpFPQxOWnMbNVcaREJRm6ks2ReQYLVCx3Mu/UeygMj5LQplugn36+usud3boVhDlnktjFHZlgWK50bc+kMxlrk2rhIZUR+1tipTieTmORvgtUy5KlwV9uFM36x8WcZpdEDJvrM/15lr8=
+  template:
+    metadata:
+      creationTimestamp: null
+      name: rhdh-postgres-auths
+      namespace: rhdh
+    type: kubernetes.io/opaque
+
