@@ -39,6 +39,9 @@ redhat-developer-hub:
     clusterRouterBase: apps.cluster-tf45l.dynamic.redhatworkshops.io
   upstream:  
     backstage:
+      extraAppConfig:
+      - configMapRef: rhdh-techdocs-plugin-config
+        filename: techdocs-app-config.yaml
       image:      
         registry: registry.redhat.io
         repository: rhdh/rhdh-hub-rhel9    
