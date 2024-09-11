@@ -149,38 +149,6 @@ redhat-developer-hub:
         #      key: secret_access_key
         #      name: rhdh-storage-secrets
 
-
-      extraVolumes:
-        # -- Ephemeral volume that will contain the dynamic plugins installed by the initContainer below at start.
-        #- name: dynamic-plugins-root
-        #  ephemeral:
-        #    volumeClaimTemplate:
-        #      spec:
-        #        accessModes:
-        #          - ReadWriteOnce
-        #        resources:
-        #          requests:
-        #            # -- Size of the volume that will contain the dynamic plugins. It should be large enough to contain all the plugins.
-        #            storage: 2Gi
-        #- name: rhdh-tls #Oauth
-        #  secret:
-        #    defaultMode: 420
-        #    secretName: rhdh-tls
-
-        # Volume that will expose the `dynamic-plugins.yaml` file from the `dynamic-plugins` config map.
-        # The `dynamic-plugins` config map is created by the helm chart from the content of the `global.dynamic` field.
-        - name: dynamic-plugins
-          configMap:
-            defaultMode: 420
-            name: dynamic-plugins
-            optional: true
-        # Optional volume that allows exposing the `.npmrc` file (through a `dynamic-plugins-npmrc` secret)
-        # to be used when running `npm pack` during the dynamic plugins installation by the initContainer.
-        - name: dynamic-plugins-npmrc
-          secret:
-            defaultMode: 420
-            optional: true
-            secretName: dynamic-plugins-npmrc
     postgresql:
       enabled: true
       auth:
