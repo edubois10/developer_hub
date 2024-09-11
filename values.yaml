@@ -42,8 +42,8 @@ redhat-developer-hub:
       extraAppConfig:
         - filename: app-config.base.yaml
           configMapRef: app-configs-base
-        - filename: app-config.bitbucket.yaml
-          configMapRef: app-configs-bitbucket
+        #- filename: app-config.bitbucket.yaml
+        #  configMapRef: app-configs-bitbucket
         - filename: app-config.keycloak.yaml
           configMapRef: app-configs-keycloak
         - filename: app-config.rbac.yaml
