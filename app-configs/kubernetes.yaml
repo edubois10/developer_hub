@@ -1,0 +1,12 @@
+# Kubernetes Plugin
+kubernetes:
+  serviceLocatorMethod:
+    type: "multiTenant"
+  clusterLocatorMethods:
+    - type: "config"
+      clusters:
+        - name: test
+          url: https://api.cluster-l5sfk.dynamic.redhatworkshops.io:6443 #To be parametrized
+          authProvider: "serviceAccount"
+          skipTLSVerify: true
+          serviceAccountToken: ${KUBERNETES_TOKEN}

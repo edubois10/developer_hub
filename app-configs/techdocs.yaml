@@ -1,0 +1,19 @@
+#aws:
+#  accounts:
+#    - accountId: techdocs
+#      accessKeyId: ${TECHDOCS_AWSS3_ACCESS_KEY_ID_CREDENTIAL}
+#      secretAccessKey: ${TECHDOCS_AWSS3_SECRET_ACCESS_KEY_CREDENTIAL}
+
+# Techdocs plugin configuration
+techdocs: 
+  generator:
+    runIn: local
+  builder: local
+  publisher:
+    type: local
+    #type: awsS3
+    #awsS3:
+    #  bucketName: rhdh-techdocs
+    #  s3ForcePathStyle: true
+    #  endpoint: https://${AWS_S3_ENDPOINT}
+    #  accountId: techdocs

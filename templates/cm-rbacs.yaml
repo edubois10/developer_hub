@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rbac-policy
+data:
+  rbac-policy.csv: |-
+    {{ .Files.Get "./rbacs/rbac-policy.csv" }}

@@ -1,0 +1,27 @@
+# Integrations
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+
+# Catalog plugin configuration
+catalog:
+  providers:
+    bitbucketServer:
+      default: # identifies your ingested dataset
+        host: 'github.com/edubois10'
+        catalogPath: /catalog-info.yaml # default value
+        filters: # optional
+          projectKey: '*' # optional; RegExp
+        schedule: # same options as in TaskScheduleDefinition
+          # supports cron, ISO duration, "human duration" as used in code
+          frequency: { minutes: 5 }
+          # supports ISO duration, "human duration" as used in code
+          timeout: { minutes: 3 }
+auth:
+  providers:
+    bitbucketServer:
+      development:
+        host: bitbucket.bit.admin.ch
+        clientId: ${AUTH_BITBUCKET_SERVER_CLIENT_ID}
+        clientSecret: ${AUTH_BITBUCKET_SERVER_CLIENT_SECRET}

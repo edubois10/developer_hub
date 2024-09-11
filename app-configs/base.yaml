@@ -1,0 +1,36 @@
+app:
+  title: 'Demo Developer Hub'
+  branding:
+    fullLogo: "data:image/svg+xml;base64,{{ .Files.Get "logo/logo.svg" | b64enc }}"
+    fullLogoWidth: 90px
+
+backend:
+  baseUrl: ${RHDH_URL}
+  cors:
+    origin: ${RHDH_URL}
+  csp:
+    connect-src: #specifies valid sources for fetch requests, such as XMLHttpRequest, WebSocket, and EventSource. Essentially, it controls which endpoints your Backstage application is allowed to communicate with for data fetching, API calls, etc.
+      - 'self'
+      - 'http:'
+      - 'https:'
+  reading:
+    allow:
+      - host: '*.redhatworkshops.io'
+
+catalog:
+  orphanStrategy: delete
+  rules:
+    - allow: [Component, System, API, Template, Location, Resource, User, Group, Domain]
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    cpu: 2
+    memory: 4Gi
+
+# Allowed Hosts
+reading:
+  allow:
+    - host: '*.redhatworkshops.io'

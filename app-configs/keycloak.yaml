@@ -1,0 +1,33 @@
+catalog:
+  rules:
+    - allow: [Component, System, API, Template, Location, Resource, User, Group, Domain]
+  providers:
+    keycloakOrg:
+      default:
+        baseUrl: 'https://keycloak-rhbk.apps.cluster-tf45l.dynamic.redhatworkshops.io'
+        loginRealm: '${RHBK_RHDH_REALM}'
+        realm: '${RHBK_RHDH_REALM}'
+        clientId: '${RHBK_RHDH_CLIENT_ID}'
+        clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+        schedule:
+          frequency: { minutes: 30 }
+          timeout: { minutes: 3 }
+          initialDelay: { seconds: 30 }
+
+signInPage: oidc
+
+# Keycloak OIDC Authentication
+auth:
+  session:
+    secret: superSecretSecret # Could be changed
+  environment: development
+  providers:
+    oidc:
+      development:
+        metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
+        clientId: ${RHBK_RHDH_CLIENT_ID}
+        clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+        prompt: auto
+        signIn:
+          resolvers:
+            - resolver: usernameMatchingUserEntityName

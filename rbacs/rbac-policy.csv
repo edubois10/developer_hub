@@ -1,0 +1,34 @@
+# Team Admin Permissions
+p, role:default/admin, catalog-entity, read, allow
+p, role:default/admin, catalog-entity, create, allow
+p, role:default/admin, catalog-entity, update, allow
+p, role:default/admin, catalog-entity, delete, allow
+p, role:default/admin, catalog.entity.create, create, allow
+p, role:default/admin, catalog.location.read, read, allow
+p, role:default/admin, catalog.location.create, create, allow
+p, role:default/admin, catalog.location.delete, delete, allow
+p, role:default/admin, scaffolder-action, use, allow
+p, role:default/admin, scaffolder-template, read, allow
+p, role:default/admin, scaffolder.task.create, create, allow
+p, role:default/admin, scaffolder.task.cancel, cancel, allow
+p, role:default/admin, scaffolder.task.read, read, allow
+p, role:default/admin, policy-entity, read, allow
+p, role:default/admin, policy-entity, create, allow
+p, role:default/admin, policy-entity, update, allow
+p, role:default/admin, policy-entity, delete, allow
+
+g, group:default/admin, role:default/admin
+
+# Team Developers Permissions
+p, role:default/developers, catalog-entity, read, allow
+p, role:default/developers, catalog-entity, create, allow
+p, role:default/developers, catalog-entity, update, allow
+p, role:default/developers, catalog.location.read, read, allow
+p, role:default/developers, catalog.location.create, create, allow
+p, role:default/developers, scaffolder-action, use, allow
+p, role:default/developers, scaffolder-template, read, allow
+p, role:default/developers, scaffolder.task.create, create, allow
+p, role:default/developers, scaffolder.task.cancel, cancel, allow
+p, role:default/developers, scaffolder.task.read, read, allow
+
+g, group:default/developers, role:default/developers
