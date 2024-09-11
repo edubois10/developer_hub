@@ -30,7 +30,6 @@ redhat-developer-hub:
         #  disabled: false
         - package: './dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic'
           disabled: false
-          pluginConfig: {}
 
     auth:    
       backend:
@@ -128,7 +127,7 @@ redhat-developer-hub:
                 clientId: '${RHBK_RHDH_CLIENT_ID}'
                 clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
                 schedule:
-                  frequency: { minutes: 30 }
+                  frequency: { minutes: 5 }
                   timeout: { minutes: 3 }
                   initialDelay: { seconds: 30 }
 
