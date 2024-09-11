@@ -121,7 +121,7 @@ redhat-developer-hub:
                   timeout: { minutes: 3 }
             keycloakOrg:
               default:
-                baseUrl: 'https://keycloak-rhbk.apps.cluster-tf45l.dynamic.redhatworkshops.io'
+                baseUrl: 'https://keycloak-rhbk.apps.cluster-474c5.474c5.sandbox3298.opentlc.com'
                 loginRealm: '${RHBK_RHDH_REALM}'
                 realm: '${RHBK_RHDH_REALM}'
                 clientId: '${RHBK_RHDH_CLIENT_ID}'
