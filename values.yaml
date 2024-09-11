@@ -41,15 +41,15 @@ redhat-developer-hub:
     backstage:
       extraAppConfig:
         - filename: app-config.base.yaml
-          configMapRef: app-config-base
+          configMapRef: app-configs-base
         - filename: app-config.bitbucket.yaml
-          configMapRef: app-config-bitbucket
+          configMapRef: app-configs-bitbucket
         - filename: app-config.keycloak.yaml
-          configMapRef: app-config-keycloak
+          configMapRef: app-configs-keycloak
         - filename: app-config.rbac.yaml
-          configMapRef: app-config-rbac
+          configMapRef: app-configs-rbac
         #- filename: app-config.techdocs.yaml
-        #  configMapRef: app-config-techdocs
+        #  configMapRef: app-configs-techdocs
         # - filename: app-config.argocd.yaml
         #   configMapRef: app-configs-argocd
         # - filename: app-config.kubernetes.yaml
