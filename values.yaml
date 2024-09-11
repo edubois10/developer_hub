@@ -36,7 +36,7 @@ redhat-developer-hub:
       backend:
         existingSecret: "rhdh-backend-auth"    
         enabled: true 
-    clusterRouterBase: apps.cluster-tf45l.dynamic.redhatworkshops.io
+    clusterRouterBase: apps.cluster-474c5.474c5.sandbox3298.opentlc.com
   upstream:  
     backstage:
       extraAppConfig:
