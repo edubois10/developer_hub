@@ -62,7 +62,15 @@ redhat-developer-hub:
           baseUrl: ${RHDH_URL}
           cors:
             origin: ${RHDH_URL}
-
+          csp:
+            connect-src:
+              - "'self'"
+              - 'http:'
+              - 'https:'
+            img-src:
+              - "'self'"
+              - 'data:'
+              - "https://test-homepage.apps.cluster-s5wtj.s5wtj.sandbox1936.opentlc.com"
         resources:
           requests:
             cpu: 500m
