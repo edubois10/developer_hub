@@ -49,8 +49,8 @@ redhat-developer-hub:
           endpoints:
             # Other Proxies
             # customize developer hub instance
-            '/developer-hub': https://test-homepage.apps.cluster-s5wtj.s5wtj.sandbox1936.opentlc.com
-              target: 
+            '/developer-hub':
+              target: https://test-homepage.apps.cluster-s5wtj.s5wtj.sandbox1936.opentlc.com
               changeOrigin: true
               # Change to "false" in case of using self-hosted cluster with a self-signed certificate
               secure: true
