@@ -1,304 +1,212 @@
 redhat-developer-hub:
-  global:
-    dynamic:
-      includes:
-        # -- List of dynamic plugins included inside the `janus-idp/backstage-showcase` container image, some of which are disabled by default.
-        # This file ONLY works with the `janus-idp/backstage-showcase` container image.
-        - 'dynamic-plugins.default.yaml'
-
-      # -- List of dynamic plugins, possibly overriding the plugins listed in `includes` files.
-      plugins:
-        - package: ./dynamic-plugins/dist/backstage-plugin-techdocs
-          disabled: false
-        - package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
-          disabled: false
-        #- package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-bitbucket-server-dynamic
-        #  disabled: false
-        #- package: ./dynamic-plugins/dist/backstage-plugin-scaffolder-backend-module-bitbucket-server-dynamic
-        #  disabled: false
-        - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
-          disabled: false
-        - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd
-          disabled: false
-        #- package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
-        #  disabled: false
-        #- package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
-        #  disabled: false
-        #- package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-topology
-        #  disabled: false
-        #- package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-tekton
-        #  disabled: false
-        - package: './dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic'
-          disabled: false
-
-    auth:    
-      backend:
-        existingSecret: "rhdh-backend-auth"    
-        enabled: true 
-    clusterRouterBase: apps.cluster-s5wtj.s5wtj.sandbox1936.opentlc.com
-  upstream:  
-    backstage:
-      image:      
-        registry: registry.redhat.io
-        repository: rhdh/rhdh-hub-rhel9    
-        tag: '1.2-105.1719294777'
-        #pullSecrets:
-        #  - ''
-      appConfig:
-        proxy:
-          endpoints:
-            # Other Proxies
-            # customize developer hub instance
-            '/developer-hub':
-              target: https://test-homepage.apps.cluster-s5wtj.s5wtj.sandbox1936.opentlc.com
-              changeOrigin: true
-              # Change to "false" in case of using self-hosted cluster with a self-signed certificate
-              secure: true
-
-        app:
-          title: 'Red Hat Developer Hub Sandbox'
-          baseUrl: ${RHDH_URL}
-        backend:
-          baseUrl: ${RHDH_URL}
-          cors:
-            origin: ${RHDH_URL}
-          csp:
-            connect-src:
-              - "'self'"
-              - 'http:'
-              - 'https:'
-            img-src:
-              - "'self'"
-              - 'data:'
-              - "https://test-homepage.apps.cluster-s5wtj.s5wtj.sandbox1936.opentlc.com"
-        resources:
-          requests:
-            cpu: 500m
-            memory: 1Gi
-          limits:
-            cpu: 1500m
-            memory: 2Gi
-        # Allowed Hosts
-        reading:
-          allow:
-            - host: '*.opentlc.com'
-        #aws:
-        #  accounts:
-        #    - accountId: techdocs
-        #      accessKeyId: ${TECHDOCS_AWSS3_ACCESS_KEY_ID_CREDENTIAL}
-        #      secretAccessKey: ${TECHDOCS_AWSS3_SECRET_ACCESS_KEY_CREDENTIAL}
-        # Techdocs plugin configuration
-        techdocs: 
-          generator:
-            runIn: local
-          builder: local
-          publisher:
-            type: local
-            #type: awsS3
-            #awsS3:
-            #  bucketName: rhdh-techdocs
-            #  s3ForcePathStyle: true
-            #  endpoint: https://${AWS_S3_ENDPOINT}
-            #  accountId: techdocs
-
-        # Integrations
-        integrations:
-          github:
-            - host: github.com
-              token: ${GITHUB_TOKEN}
-
-        # Keycloak OIDC Authentication
-        signInPage: oidc
+    global:
         auth:
-          session:
-            secret: superSecretSecret
-          environment: development
-          providers:
-            oidc:
-              development:
-                metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
-                clientId: ${RHBK_RHDH_CLIENT_ID}
-                clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
-                prompt: auto
-
-        # Catalog plugin configuration
-        catalog:
-          rules:
-            - allow: [Component, System, API, Template, Location, Resource, User, Group, Domain]
-          providers:
-            bitbucketServer:
-              default: # identifies your ingested dataset
-                host: 'github.com/edubois10'
-                catalogPath: /catalog-info.yaml # default value
-                filters: # optional
-                  projectKey: '*' # optional; RegExp
-                schedule: # same options as in TaskScheduleDefinition
-                  # supports cron, ISO duration, "human duration" as used in code
-                  frequency: { minutes: 5 }
-                  # supports ISO duration, "human duration" as used in code
-                  timeout: { minutes: 3 }
-            keycloakOrg:
-              default:
-                baseUrl: 'https://keycloak-rhbk.apps.cluster-s5wtj.s5wtj.sandbox1936.opentlc.com'
-                loginRealm: '${RHBK_RHDH_REALM}'
-                realm: '${RHBK_RHDH_REALM}'
-                clientId: '${RHBK_RHDH_CLIENT_ID}'
-                clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
-                schedule:
-                  frequency: { minutes: 5 }
-                  timeout: { minutes: 3 }
-                  initialDelay: { seconds: 30 }
-
-        # ArgoCD plugin
-        argocd:
-          username: ${ARGOCD_USER}
-          password: ${ARGOCD_RHDH_PASSWORD}
-          waitCycles: 25
-          appLocatorMethods:
-            - type: 'config'
-              instances:
-                - name: rhdh-gitops-d
-                  url: https://openshift-gitops-server-openshift-gitops.apps.cluster-dvrgh.dynamic.redhatworkshops.io
-                
-        # Kubernetes Plugin
-        #kubernetes:
-        #  serviceLocatorMethod:
-        #    type: "multiTenant"
-        #  clusterLocatorMethods:
-        #    - type: "config"
-        #      clusters:
-        #        - name: test
-        #          url: https://api.cluster-l5sfk.dynamic.redhatworkshops.io:6443
-        #          authProvider: "serviceAccount"
-        #          skipTLSVerify: true
-        #          serviceAccountToken: ${KUBERNETES_TOKEN}
-
-      extraEnvVars:
-        # Trust self Signed certificates
-        #- name: LOG_LEVEL
-        #  value: debug
-        # Trust self Signed certificates
-        - name: NODE_TLS_REJECT_UNAUTHORIZED
-          value: '0'
-        - name: BACKEND_SECRET
-          valueFrom:
-            secretKeyRef:
-              key: backend-secret
-              name: '{{ include "janus-idp.backend-secret-name" $ }}'
-        - name: POSTGRESQL_ADMIN_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: postgres-password
-              name: rhdh-postgres-auths
-        - name: GITHUB_TOKEN
-          valueFrom:
-            secretKeyRef:
-              key: github-token
-              name: rhdh-github-token
-        - name: ARGOCD_USER
-          valueFrom:
-            secretKeyRef:
-              key: argocd-username
-              name: rhdh-argocd-auths
-        - name: ARGOCD_RHDH_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: argocd-rhdh-password
-              name: rhdh-argocd-auths
-        - name: KUBERNETES_TOKEN
-          valueFrom:
-            secretKeyRef:
-              key: token
-              name: rhdh-kubernetes-token
-        - name: RHDH_SESSION_SECRET
-          valueFrom:
-            secretKeyRef:
-              key: session-secret
-              name: keycloak-plugin
-        - name: RHBK_RHDH_REALM_METADATA_URL
-          valueFrom:
-            secretKeyRef:
-              key: realm-metadata-url
-              name: keycloak-plugin
-        - name: RHBK_RHDH_CLIENT_ID
-          valueFrom:
-            secretKeyRef:
-              key: client-id
-              name: keycloak-plugin
-        - name: RHBK_RHDH_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              key: client-secret
-              name: keycloak-plugin
-        - name: RHBK_BASE_URL
-          valueFrom:
-            secretKeyRef:
-              key: rhbk-base-url
-              name: keycloak-plugin
-        - name: RHBK_RHDH_REALM
-          valueFrom:
-            secretKeyRef:
-              key: rhbk-rhdh-realm
-              name: keycloak-plugin
-        - name: RHDH_URL
-          valueFrom:
-            secretKeyRef:
-              key: rhdh-url
-              name: keycloak-plugin
-        #- name: AWS_S3_ENDPOINT
-        #  valueFrom:
-        #    secretKeyRef:
-        #      key: s3_endpoint
-        #      name: rhdh-storage-secrets
-        #- name: TECHDOCS_AWSS3_ACCESS_KEY_ID_CREDENTIAL
-        #  valueFrom:
-        #    secretKeyRef:
-        #      key: access_key
-        #      name: rhdh-storage-secrets
-        #- name: TECHDOCS_AWSS3_SECRET_ACCESS_KEY_CREDENTIAL
-        #  valueFrom:
-        #    secretKeyRef:
-        #      key: secret_access_key
-        #      name: rhdh-storage-secrets
-      #extraVolumeMounts:
-        # The initContainer below will install dynamic plugins in this volume mount.
-        #- name: dynamic-plugins-root
-        #  mountPath: /opt/app-root/src/dynamic-plugins-root
-        #- name: rhdh-tls #Oauth
-        #  mountPath: /tmp/fakepath
-
-      #extraVolumes:
-        # -- Ephemeral volume that will contain the dynamic plugins installed by the initContainer below at start.
-        #- name: dynamic-plugins-root
-        #  ephemeral:
-        #    volumeClaimTemplate:
-        #      spec:
-        #        accessModes:
-        #          - ReadWriteOnce
-        #        resources:
-        #          requests:
-        #            # -- Size of the volume that will contain the dynamic plugins. It should be large enough to contain all the plugins.
-        #            storage: 2Gi
-        #- name: rhdh-tls #Oauth
-        #  secret:
-        #    defaultMode: 420
-        #    secretName: rhdh-tls
-
-        # Volume that will expose the `dynamic-plugins.yaml` file from the `dynamic-plugins` config map.
-        # The `dynamic-plugins` config map is created by the helm chart from the content of the `global.dynamic` field.
-        - name: dynamic-plugins
-          configMap:
-            defaultMode: 420
-            name: dynamic-plugins
-            optional: true
-        # Optional volume that allows exposing the `.npmrc` file (through a `dynamic-plugins-npmrc` secret)
-        # to be used when running `npm pack` during the dynamic plugins installation by the initContainer.
-        - name: dynamic-plugins-npmrc
-          secret:
-            defaultMode: 420
-            optional: true
-            secretName: dynamic-plugins-npmrc
-    postgresql:
-      enabled: true
-      auth:
-        existingSecret: "rhdh-postgres-auths"
+            backend:
+                enabled: true
+                existingSecret: rhdh-backend-auth
+        clusterRouterBase: https://test-homepage.apps.cluster-nct2z.nct2z.sandbox823.opentlc.com
+        dynamic:
+            includes:
+            - dynamic-plugins.default.yaml
+            plugins:
+            -   disabled: false
+                package: ./dynamic-plugins/dist/backstage-plugin-techdocs
+            -   disabled: false
+                package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
+            -   disabled: false
+                package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
+            -   disabled: false
+                package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd
+            -   disabled: false
+                package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
+    upstream:
+        backstage:
+            appConfig:
+                app:
+                    baseUrl: ${RHDH_URL}
+                    title: Red Hat Developer Hub Sandbox
+                argocd:
+                    appLocatorMethods:
+                    -   instances:
+                        -   name: rhdh-gitops-d
+                            url: https://openshift-gitops-server-openshift-gitops.apps.cluster-dvrgh.dynamic.redhatworkshops.io
+                        type: config
+                    password: ${ARGOCD_RHDH_PASSWORD}
+                    username: ${ARGOCD_USER}
+                    waitCycles: 25
+                auth:
+                    environment: development
+                    providers:
+                        oidc:
+                            development:
+                                clientId: ${RHBK_RHDH_CLIENT_ID}
+                                clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+                                metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
+                                prompt: auto
+                    session:
+                        secret: superSecretSecret
+                backend:
+                    baseUrl: ${RHDH_URL}
+                    cors:
+                        origin: ${RHDH_URL}
+                    csp:
+                        connect-src:
+                        - '''self'''
+                        - 'http:'
+                        - 'https:'
+                        img-src:
+                        - '''self'''
+                        - 'data:'
+                        - https://test-homepage.apps.cluster-s5wtj.s5wtj.sandbox1936.opentlc.com
+                catalog:
+                    providers:
+                        bitbucketServer:
+                            default:
+                                catalogPath: /catalog-info.yaml
+                                filters:
+                                    projectKey: '*'
+                                host: github.com/edubois10
+                                schedule:
+                                    frequency:
+                                        minutes: 5
+                                    timeout:
+                                        minutes: 3
+                        keycloakOrg:
+                            default:
+                                baseUrl: https://keycloak-rhbk.apps.cluster-nct2z.nct2z.sandbox823.opentlc.com
+                                clientId: ${RHBK_RHDH_CLIENT_ID}
+                                clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+                                loginRealm: ${RHBK_RHDH_REALM}
+                                realm: ${RHBK_RHDH_REALM}
+                                schedule:
+                                    frequency:
+                                        minutes: 5
+                                    initialDelay:
+                                        seconds: 30
+                                    timeout:
+                                        minutes: 3
+                    rules:
+                    -   allow:
+                        - Component
+                        - System
+                        - API
+                        - Template
+                        - Location
+                        - Resource
+                        - User
+                        - Group
+                        - Domain
+                integrations:
+                    github:
+                    -   host: github.com
+                        token: ${GITHUB_TOKEN}
+                proxy:
+                    endpoints:
+                        /developer-hub:
+                            changeOrigin: true
+                            secure: true
+                            target: https://test-homepage.apps.cluster-s5wtj.s5wtj.sandbox1936.opentlc.com
+                    target: https://test-homepage.apps.cluster-nct2z.nct2z.sandbox823.opentlc.com
+                reading:
+                    allow:
+                    -   host: '*.opentlc.com'
+                resources:
+                    limits:
+                        cpu: 1500m
+                        memory: 2Gi
+                    requests:
+                        cpu: 500m
+                        memory: 1Gi
+                signInPage: oidc
+                techdocs:
+                    builder: local
+                    generator:
+                        runIn: local
+                    publisher:
+                        type: local
+            extraEnvVars:
+            -   name: NODE_TLS_REJECT_UNAUTHORIZED
+                value: '0'
+            -   name: BACKEND_SECRET
+                valueFrom:
+                    secretKeyRef:
+                        key: backend-secret
+                        name: '{{ include "janus-idp.backend-secret-name" $ }}'
+            -   name: POSTGRESQL_ADMIN_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                        key: postgres-password
+                        name: rhdh-postgres-auths
+            -   name: GITHUB_TOKEN
+                valueFrom:
+                    secretKeyRef:
+                        key: github-token
+                        name: rhdh-github-token
+            -   name: ARGOCD_USER
+                valueFrom:
+                    secretKeyRef:
+                        key: argocd-username
+                        name: rhdh-argocd-auths
+            -   name: ARGOCD_RHDH_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                        key: argocd-rhdh-password
+                        name: rhdh-argocd-auths
+            -   name: KUBERNETES_TOKEN
+                valueFrom:
+                    secretKeyRef:
+                        key: token
+                        name: rhdh-kubernetes-token
+            -   name: RHDH_SESSION_SECRET
+                valueFrom:
+                    secretKeyRef:
+                        key: session-secret
+                        name: keycloak-plugin
+            -   name: RHBK_RHDH_REALM_METADATA_URL
+                valueFrom:
+                    secretKeyRef:
+                        key: realm-metadata-url
+                        name: keycloak-plugin
+            -   name: RHBK_RHDH_CLIENT_ID
+                valueFrom:
+                    secretKeyRef:
+                        key: client-id
+                        name: keycloak-plugin
+            -   name: RHBK_RHDH_CLIENT_SECRET
+                valueFrom:
+                    secretKeyRef:
+                        key: client-secret
+                        name: keycloak-plugin
+            -   name: RHBK_BASE_URL
+                valueFrom:
+                    secretKeyRef:
+                        key: rhbk-base-url
+                        name: keycloak-plugin
+            -   name: RHBK_RHDH_REALM
+                valueFrom:
+                    secretKeyRef:
+                        key: rhbk-rhdh-realm
+                        name: keycloak-plugin
+            -   name: RHDH_URL
+                valueFrom:
+                    secretKeyRef:
+                        key: rhdh-url
+                        name: keycloak-plugin
+            -   configMap:
+                    defaultMode: 420
+                    name: dynamic-plugins
+                    optional: true
+                name: dynamic-plugins
+            -   name: dynamic-plugins-npmrc
+                secret:
+                    defaultMode: 420
+                    optional: true
+                    secretName: dynamic-plugins-npmrc
+            image:
+                registry: registry.redhat.io
+                repository: rhdh/rhdh-hub-rhel9
+                tag: 1.2-105.1719294777
+        postgresql:
+            auth:
+                existingSecret: rhdh-postgres-auths
+            enabled: true
