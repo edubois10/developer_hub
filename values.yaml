@@ -34,7 +34,7 @@ redhat-developer-hub:
                 #    password: ${ARGOCD_RHDH_PASSWORD}
                 #    username: ${ARGOCD_USER}
                 #    waitCycles: 25
-                auth:
+                #auth:
                     #environment: development
                     #providers:
                     #    oidc:
