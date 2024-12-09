@@ -13,38 +13,38 @@ redhat-developer-hub:
                 package: ./dynamic-plugins/dist/backstage-plugin-techdocs
             -   disabled: false
                 package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
-            -   disabled: true
-                package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
-            -   disabled: true
-                package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd
-            -   disabled: true
-                package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
+            #-   disabled: true
+            #    package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
+            #-   disabled: true
+            #    package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd
+            #-   disabled: true
+            #    package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
     upstream:
         backstage:
             appConfig:
                 app:
                     baseUrl: ${RHDH_URL}
                     title: Red Hat Developer Hub Sandbox
-                argocd:
-                    appLocatorMethods:
-                    -   instances:
-                        -   name: rhdh-gitops-d
-                            url: https://openshift-gitops-server-openshift-gitops.cluster-c22bf.c22bf.sandbox3041.opentlc.com
-                        type: config
-                    password: ${ARGOCD_RHDH_PASSWORD}
-                    username: ${ARGOCD_USER}
-                    waitCycles: 25
+                #argocd:
+                #    appLocatorMethods:
+                #    -   instances:
+                #        -   name: rhdh-gitops-d
+                #            url: https://openshift-gitops-server-openshift-gitops.cluster-c22bf.c22bf.sandbox3041.opentlc.com
+                #        type: config
+                #    password: ${ARGOCD_RHDH_PASSWORD}
+                #    username: ${ARGOCD_USER}
+                #    waitCycles: 25
                 auth:
-                    environment: development
-                    providers:
-                        oidc:
-                            development:
-                                clientId: ${RHBK_RHDH_CLIENT_ID}
-                                clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
-                                metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
-                                prompt: auto
-                    session:
-                        secret: superSecretSecret
+                    #environment: development
+                    #providers:
+                    #    oidc:
+                    #        development:
+                    #            clientId: ${RHBK_RHDH_CLIENT_ID}
+                    #            clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+                    #            metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
+                    #            prompt: auto
+                    #session:
+                    #    secret: superSecretSecret
                 backend:
                     baseUrl: ${RHDH_URL}
                     cors:
@@ -71,20 +71,20 @@ redhat-developer-hub:
                                         minutes: 5
                                     timeout:
                                         minutes: 3
-                        keycloakOrg:
-                            default:
-                                baseUrl: https://keycloak-rhbk.cluster-c22bf.c22bf.sandbox3041.opentlc.com
-                                clientId: ${RHBK_RHDH_CLIENT_ID}
-                                clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
-                                loginRealm: ${RHBK_RHDH_REALM}
-                                realm: ${RHBK_RHDH_REALM}
-                                schedule:
-                                    frequency:
-                                        minutes: 5
-                                    initialDelay:
-                                        seconds: 30
-                                    timeout:
-                                        minutes: 3
+                        #keycloakOrg:
+                        #    default:
+                        #        baseUrl: https://keycloak-rhbk.cluster-c22bf.c22bf.sandbox3041.opentlc.com
+                        #        clientId: ${RHBK_RHDH_CLIENT_ID}
+                        #        clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+                        #        loginRealm: ${RHBK_RHDH_REALM}
+                        #        realm: ${RHBK_RHDH_REALM}
+                        #        schedule:
+                        #            frequency:
+                        #                minutes: 5
+                        #            initialDelay:
+                        #                seconds: 30
+                        #            timeout:
+                        #                minutes: 3
                     rules:
                     -   allow:
                         - Component
@@ -101,15 +101,15 @@ redhat-developer-hub:
                     -   host: github.com
                         token: ${GITHUB_TOKEN}
                 proxy:
-                    endpoints:
-                        /developer-hub:
-                            changeOrigin: true
-                            secure: true
-                            target: https://test-homepage.cluster-c22bf.c22bf.sandbox3041.opentlc.com
-                    target: https://test-homepage.cluster-c22bf.c22bf.sandbox3041.opentlc.com
+                    #endpoints:
+                    #    /developer-hub:
+                    #        changeOrigin: true
+                    #        secure: true
+                    #        target: https://test-homepage.cluster-c22bf.c22bf.sandbox3041.opentlc.com
+                    #target: https://test-homepage.cluster-c22bf.c22bf.sandbox3041.opentlc.com
                 reading:
                     allow:
-                    -   host: '*.opentlc.com'
+                    -   host: '*.com'
                 resources:
                     limits:
                         cpu: 1500m
@@ -117,7 +117,7 @@ redhat-developer-hub:
                     requests:
                         cpu: 500m
                         memory: 1Gi
-                signInPage: oidc
+                #signInPage: oidc
                 techdocs:
                     builder: local
                     generator:
@@ -142,56 +142,56 @@ redhat-developer-hub:
                     secretKeyRef:
                         key: github-token
                         name: rhdh-github-token
-            -   name: ARGOCD_USER
-                valueFrom:
-                    secretKeyRef:
-                        key: argocd-username
-                        name: rhdh-argocd-auths
-            -   name: ARGOCD_RHDH_PASSWORD
-                valueFrom:
-                    secretKeyRef:
-                        key: argocd-rhdh-password
-                        name: rhdh-argocd-auths
-            -   name: KUBERNETES_TOKEN
-                valueFrom:
-                    secretKeyRef:
-                        key: token
-                        name: rhdh-kubernetes-token
+            #-   name: ARGOCD_USER
+            #    valueFrom:
+            #        secretKeyRef:
+            #            key: argocd-username
+            #            name: rhdh-argocd-auths
+            #-   name: ARGOCD_RHDH_PASSWORD
+            #    valueFrom:
+            #        secretKeyRef:
+            #            key: argocd-rhdh-password
+            #            name: rhdh-argocd-auths
+            #-   name: KUBERNETES_TOKEN
+            #    valueFrom:
+            #        secretKeyRef:
+            #            key: token
+            #            name: rhdh-kubernetes-token
             -   name: RHDH_SESSION_SECRET
                 valueFrom:
                     secretKeyRef:
                         key: session-secret
                         name: keycloak-plugin
-            -   name: RHBK_RHDH_REALM_METADATA_URL
-                valueFrom:
-                    secretKeyRef:
-                        key: realm-metadata-url
-                        name: keycloak-plugin
-            -   name: RHBK_RHDH_CLIENT_ID
-                valueFrom:
-                    secretKeyRef:
-                        key: client-id
-                        name: keycloak-plugin
-            -   name: RHBK_RHDH_CLIENT_SECRET
-                valueFrom:
-                    secretKeyRef:
-                        key: client-secret
-                        name: keycloak-plugin
-            -   name: RHBK_BASE_URL
-                valueFrom:
-                    secretKeyRef:
-                        key: rhbk-base-url
-                        name: keycloak-plugin
-            -   name: RHBK_RHDH_REALM
-                valueFrom:
-                    secretKeyRef:
-                        key: rhbk-rhdh-realm
-                        name: keycloak-plugin
-            -   name: RHDH_URL
-                valueFrom:
-                    secretKeyRef:
-                        key: rhdh-url
-                        name: keycloak-plugin
+            #-   name: RHBK_RHDH_REALM_METADATA_URL
+            #    valueFrom:
+            #        secretKeyRef:
+            #            key: realm-metadata-url
+            #            name: keycloak-plugin
+            #-   name: RHBK_RHDH_CLIENT_ID
+            #    valueFrom:
+            #        secretKeyRef:
+            #            key: client-id
+            #            name: keycloak-plugin
+            #-   name: RHBK_RHDH_CLIENT_SECRET
+            #    valueFrom:
+            #        secretKeyRef:
+            #            key: client-secret
+            #            name: keycloak-plugin
+            #-   name: RHBK_BASE_URL
+            #    valueFrom:
+            #        secretKeyRef:
+            #            key: rhbk-base-url
+            #            name: keycloak-plugin
+            #-   name: RHBK_RHDH_REALM
+            #    valueFrom:
+            #        secretKeyRef:
+            #            key: rhbk-rhdh-realm
+            #            name: keycloak-plugin
+            #-   name: RHDH_URL
+            #    valueFrom:
+            #        secretKeyRef:
+            #            key: rhdh-url
+            #            name: keycloak-plugin
             -   configMap:
                     defaultMode: 420
                     name: dynamic-plugins
