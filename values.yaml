@@ -4,7 +4,7 @@ redhat-developer-hub:
             backend:
                 enabled: true
                 existingSecret: rhdh-backend-auth
-        clusterRouterBase: apps.cluster-c22bf.c22bf.sandbox3041.opentlc.com
+        clusterRouterBase: apps.cluster-c22bf.c22fsafasbf.sandbox3041.opentlc.com
         dynamic:
             includes:
             - dynamic-plugins.default.yaml
