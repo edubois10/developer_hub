@@ -13,11 +13,11 @@ redhat-developer-hub:
                 package: ./dynamic-plugins/dist/backstage-plugin-techdocs
             -   disabled: false
                 package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
-            -   disabled: true
+            -   disabled: false
                 package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
-            -   disabled: true
-            #    package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd
-            #-   disabled: true
+            -   disabled: false
+                package: ./dynamic-plugins/dist/backstage-community-plugin-redhat-argocd
+            -   disabled: false
             #    package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
     upstream:
         backstage:
@@ -26,14 +26,13 @@ redhat-developer-hub:
                     baseUrl: ${RHDH_URL}
                     title: Red Hat Developer Hub Sandbox
                 argocd:
-                    appLocatorMethods:
-                    -   instances:
-                        -   name: rhdh-gitops-d
-                            url: https://openshift-gitops-server-openshift-gitops.cluster-5clzf.5clzf.sandbox2839.opentlc.com
-                        type: config
-                    password: ${ARGOCD_RHDH_PASSWORD}
-                    username: ${ARGOCD_USER}
-                    waitCycles: 25
+                  appLocatorMethods:
+                    - type: 'config'
+                      instances:
+                        - name: rhdh-gitops-d
+                          url: https://openshift-gitops-server-openshift-gitops.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+                          username: ${ARGOCD_USER}
+                          password: ${ARGOCD_RHDH_PASSWORD}
                 #auth:
                     #environment: development
                     #providers:
