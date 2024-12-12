@@ -26,6 +26,10 @@ redhat-developer-hub:
               configMapRef: app-configs-base
             - filename: app-config-argocd.yaml
               configMapRef: app-configs-argocd
+            - filename: app-config-techdocs
+              configMapRed: app-configs-techdocs
+            - filename: app-config-keycloak
+              configMapRed: app-configs-keycloak
           appConfig:
               #app:
               #    baseUrl: ${RHDH_URL}
