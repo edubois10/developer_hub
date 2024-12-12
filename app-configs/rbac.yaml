@@ -1,9 +1,9 @@
 permission:
   enabled: true
-  rbac:
-    policies-csv-file: /opt/app-root/src/rbac/rbac-policies.csv
-    conditionalPoliciesFile: /opt/app-root/src/rbac/conditional-policies.yaml
-    policyFileReload: true
+  #rbac:
+    #policies-csv-file: /opt/app-root/src/rbac/rbac-policies.csv
+    #conditionalPoliciesFile: /opt/app-root/src/rbac/conditional-policies.yaml
+    #policyFileReload: true
     #admin:
     #  superUsers:
     #    - name: {{ .Values.plugins.rbac.superuser | lower }}
