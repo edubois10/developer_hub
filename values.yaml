@@ -38,15 +38,15 @@ redhat-developer-hub:
               #          url: https://openshift-gitops-server-openshift-gitops.cluster-5clzf.5clzf.sandbox2839.opentlc.com
               #          username: ${ARGOCD_USER}
               #          password: ${ARGOCD_RHDH_PASSWORD}
-              auth:
-                environment: development
-                providers:
-                    oidc:
-                        development:
-                            clientId: ${RHBK_RHDH_CLIENT_ID}
-                            clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
-                            metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
-                            prompt: auto
+              #auth:
+              #  environment: development
+              #  providers:
+              #      oidc:
+              #          development:
+              #              clientId: ${RHBK_RHDH_CLIENT_ID}
+              #              clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+              #              metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
+              #              prompt: auto
                 session:
                     secret: superSecretSecret
               #backend:
@@ -75,20 +75,20 @@ redhat-developer-hub:
                                       minutes: 5
                                   timeout:
                                       minutes: 3
-                      keycloakOrg:
-                          default:
-                              baseUrl: https://keycloak-rhbk.cluster-5clzf.5clzf.sandbox2839.opentlc.com
-                              clientId: ${RHBK_RHDH_CLIENT_ID}
-                              clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
-                              loginRealm: ${RHBK_RHDH_REALM}
-                              realm: ${RHBK_RHDH_REALM}
-                              schedule:
-                                  frequency:
-                                      minutes: 5
-                                  initialDelay:
-                                      seconds: 30
-                                  timeout:
-                                      minutes: 3
+                      #keycloakOrg:
+                      #    default:
+                      #        baseUrl: https://keycloak-rhbk.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+                      #        clientId: ${RHBK_RHDH_CLIENT_ID}
+                      #        clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+                      #        loginRealm: ${RHBK_RHDH_REALM}
+                      #        realm: ${RHBK_RHDH_REALM}
+                      #        schedule:
+                      #            frequency:
+                      #                minutes: 5
+                      #            initialDelay:
+                      #                seconds: 30
+                      #            timeout:
+                      #                minutes: 3
                   rules:
                   -   allow:
                       - Component
@@ -121,13 +121,13 @@ redhat-developer-hub:
               #    requests:
               #        cpu: 500m
               #        memory: 1Gi
-              signInPage: oidc
-              techdocs:
-                  builder: local
-                  generator:
-                      runIn: local
-                  publisher:
-                      type: local
+              #signInPage: oidc
+              #techdocs:
+              #    builder: local
+              #    generator:
+              #        runIn: local
+              #    publisher:
+              #        type: local
           extraVolumeMounts:
             # The initContainer below will install dynamic plugins in this volume mount.
             - name: dynamic-plugins-root

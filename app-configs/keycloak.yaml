@@ -1,0 +1,28 @@
+catalog:
+  providers:
+    keycloakOrg:
+      default:
+        baseUrl: https://keycloak-rhbk.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+        clientId: ${RHBK_RHDH_CLIENT_ID}
+        clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+        loginRealm: ${RHBK_RHDH_REALM}
+        realm: ${RHBK_RHDH_REALM}
+        schedule:
+          frequency:
+            minutes: 5
+          initialDelay:
+            seconds: 30
+          timeout:
+            minutes: 3
+
+signInPage: oidc
+
+auth:
+  environment: development
+  providers:
+    oidc:
+      development:
+        clientId: ${RHBK_RHDH_CLIENT_ID}
+        clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+        metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
+        prompt: auto
