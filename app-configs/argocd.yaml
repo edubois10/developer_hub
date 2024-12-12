@@ -1,0 +1,8 @@
+argocd:
+  appLocatorMethods:
+    - type: 'config'
+      instances:
+        - name: rhdh-gitops-d
+          url: https://openshift-gitops-server-openshift-gitops.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+          username: ${ARGOCD_USER}
+          password: ${ARGOCD_RHDH_PASSWORD}

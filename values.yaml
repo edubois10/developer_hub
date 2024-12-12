@@ -24,18 +24,20 @@ redhat-developer-hub:
           extraAppConfig:
             - filename: app-config-base.yaml
               configMapRef: app-configs-base
+            - filename: app-config-argocd.yaml
+              configMapRef: app-configs-argocd
           appConfig:
               #app:
               #    baseUrl: ${RHDH_URL}
               #    title: Red Hat Developer Hub Sandbox
-              argocd:
-                appLocatorMethods:
-                  - type: 'config'
-                    instances:
-                      - name: rhdh-gitops-d
-                        url: https://openshift-gitops-server-openshift-gitops.cluster-5clzf.5clzf.sandbox2839.opentlc.com
-                        username: ${ARGOCD_USER}
-                        password: ${ARGOCD_RHDH_PASSWORD}
+              #argocd:
+              #  appLocatorMethods:
+              #    - type: 'config'
+              #      instances:
+              #        - name: rhdh-gitops-d
+              #          url: https://openshift-gitops-server-openshift-gitops.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+              #          username: ${ARGOCD_USER}
+              #          password: ${ARGOCD_RHDH_PASSWORD}
               auth:
                 environment: development
                 providers:
