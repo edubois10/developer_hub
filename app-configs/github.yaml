@@ -1,0 +1,32 @@
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+
+catalog:
+  orphanStrategy: delete
+  rules:
+    - allow: [Component, System, API, Template, Location, Resource, User, Group, Domain]
+  providers:
+    github:
+      default:
+        catalogPath: /catalog-info.yaml
+        filters:
+          projectKey: '*'
+        host: github.com/edubois10
+        schedule:
+          frequency:
+            minutes: 5
+          timeout:
+            minutes: 3
+    rules:
+      -   allow:
+      - Component
+      - System
+      - API
+      - Template
+      - Location
+      - Resource
+      - User
+      - Group
+      - Domain

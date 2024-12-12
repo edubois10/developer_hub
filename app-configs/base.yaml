@@ -23,6 +23,14 @@ backend:
 #  rules:
 #    - allow: [Component, System, API, Template, Location, Resource, User, Group, Domain]
 
+#proxy:
+  #endpoints:
+  #    /developer-hub:
+  #        changeOrigin: true
+  #        secure: true
+  #        target: https://test-homepage.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+  #target: https://test-homepage.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+
 resources:
   requests:
     cpu: 500m
