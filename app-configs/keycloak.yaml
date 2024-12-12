@@ -26,3 +26,5 @@ auth:
         clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
         metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
         prompt: auto
+  session:
+    secret: superSecretSecret
