@@ -35,3 +35,15 @@ resources:
 reading:
   allow:
     - host: '*.'
+
+auditLog:
+  rotateFile:
+    enabled: true
+    logFileDirPath: /var/log/rhdh/audits
+    logFileName: rhdh-audit-log-%DATE%.log
+    frequency: '1d'
+    dateFormat: 'YYYY-MM-DD'
+    utc: false
+    maxSize: 100m
+    maxFilesOrDays: 365
+    zippedArchive: false
