@@ -216,7 +216,7 @@ redhat-developer-hub:
             registry: registry.redhat.io
             repository: rhdh/rhdh-hub-rhel9
             tag: 1.3-124.1731508449
-      postgresql:
-        auth:
-            existingSecret: rhdh-postgres-auths
-        enabled: true
+        postgresql:
+          auth:
+              existingSecret: rhdh-postgres-auths
+          enabled: true
