@@ -21,191 +21,194 @@ redhat-developer-hub:
                 package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
     upstream:
         backstage:
-            appConfig:
-                app:
-                    baseUrl: ${RHDH_URL}
-                    title: Red Hat Developer Hub Sandbox
-                argocd:
-                  appLocatorMethods:
-                    - type: 'config'
-                      instances:
-                        - name: rhdh-gitops-d
-                          url: https://openshift-gitops-server-openshift-gitops.cluster-5clzf.5clzf.sandbox2839.opentlc.com
-                          username: ${ARGOCD_USER}
-                          password: ${ARGOCD_RHDH_PASSWORD}
-                auth:
-                  environment: development
+          extraAppConfig:
+            - filename: app-config.base.yaml
+              configMapRef: app-configs-base
+          appConfig:
+              #app:
+              #    baseUrl: ${RHDH_URL}
+              #    title: Red Hat Developer Hub Sandbox
+              argocd:
+                appLocatorMethods:
+                  - type: 'config'
+                    instances:
+                      - name: rhdh-gitops-d
+                        url: https://openshift-gitops-server-openshift-gitops.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+                        username: ${ARGOCD_USER}
+                        password: ${ARGOCD_RHDH_PASSWORD}
+              auth:
+                environment: development
+                providers:
+                    oidc:
+                        development:
+                            clientId: ${RHBK_RHDH_CLIENT_ID}
+                            clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+                            metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
+                            prompt: auto
+                session:
+                    secret: superSecretSecret
+              #backend:
+                #baseUrl: ${RHDH_URL}
+                #cors:
+                #    origin: ${RHDH_URL}
+                #csp:
+                #    connect-src:
+                #    - '''self'''
+                #    - 'http:'
+                #    - 'https:'
+                #    img-src:
+                #    - '''self'''
+                #    - 'data:'
+                #    - https://test-homepage.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+              catalog:
                   providers:
-                      oidc:
-                          development:
+                      bitbucketServer:
+                          default:
+                              catalogPath: /catalog-info.yaml
+                              filters:
+                                  projectKey: '*'
+                              host: github.com/edubois10
+                              schedule:
+                                  frequency:
+                                      minutes: 5
+                                  timeout:
+                                      minutes: 3
+                      keycloakOrg:
+                          default:
+                              baseUrl: https://keycloak-rhbk.cluster-5clzf.5clzf.sandbox2839.opentlc.com
                               clientId: ${RHBK_RHDH_CLIENT_ID}
                               clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
-                              metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
-                              prompt: auto
-                  session:
-                      secret: superSecretSecret
-                backend:
-                    baseUrl: ${RHDH_URL}
-                    cors:
-                        origin: ${RHDH_URL}
-                    csp:
-                        connect-src:
-                        - '''self'''
-                        - 'http:'
-                        - 'https:'
-                        img-src:
-                        - '''self'''
-                        - 'data:'
-                        - https://test-homepage.cluster-5clzf.5clzf.sandbox2839.opentlc.com
-                catalog:
-                    providers:
-                        bitbucketServer:
-                            default:
-                                catalogPath: /catalog-info.yaml
-                                filters:
-                                    projectKey: '*'
-                                host: github.com/edubois10
-                                schedule:
-                                    frequency:
-                                        minutes: 5
-                                    timeout:
-                                        minutes: 3
-                        keycloakOrg:
-                            default:
-                                baseUrl: https://keycloak-rhbk.cluster-5clzf.5clzf.sandbox2839.opentlc.com
-                                clientId: ${RHBK_RHDH_CLIENT_ID}
-                                clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
-                                loginRealm: ${RHBK_RHDH_REALM}
-                                realm: ${RHBK_RHDH_REALM}
-                                schedule:
-                                    frequency:
-                                        minutes: 5
-                                    initialDelay:
-                                        seconds: 30
-                                    timeout:
-                                        minutes: 3
-                    rules:
-                    -   allow:
-                        - Component
-                        - System
-                        - API
-                        - Template
-                        - Location
-                        - Resource
-                        - User
-                        - Group
-                        - Domain
-                integrations:
-                    github:
-                    -   host: github.com
-                        token: ${GITHUB_TOKEN}
-                proxy:
-                    #endpoints:
-                    #    /developer-hub:
-                    #        changeOrigin: true
-                    #        secure: true
-                    #        target: https://test-homepage.cluster-5clzf.5clzf.sandbox2839.opentlc.com
-                    #target: https://test-homepage.cluster-5clzf.5clzf.sandbox2839.opentlc.com
-                reading:
-                    allow:
-                    -   host: '*.com'
-                resources:
-                    limits:
-                        cpu: 1500m
-                        memory: 2Gi
-                    requests:
-                        cpu: 500m
-                        memory: 1Gi
-                signInPage: oidc
-                techdocs:
-                    builder: local
-                    generator:
-                        runIn: local
-                    publisher:
-                        type: local
-            extraEnvVars:
-            -   name: NODE_TLS_REJECT_UNAUTHORIZED
-                value: '0'
-            -   name: BACKEND_SECRET
-                valueFrom:
-                    secretKeyRef:
-                        key: backend-secret
-                        name: '{{ include "janus-idp.backend-secret-name" $ }}'
-            -   name: POSTGRESQL_ADMIN_PASSWORD
-                valueFrom:
-                    secretKeyRef:
-                        key: postgres-password
-                        name: rhdh-postgres-auths
-            -   name: GITHUB_TOKEN
-                valueFrom:
-                    secretKeyRef:
-                        key: github-token
-                        name: rhdh-github-token
-            -   name: ARGOCD_USER
-                valueFrom:
-                    secretKeyRef:
-                        key: argocd-username
-                        name: rhdh-argocd-auths
-            -   name: ARGOCD_RHDH_PASSWORD
-                valueFrom:
-                    secretKeyRef:
-                        key: argocd-rhdh-password
-                        name: rhdh-argocd-auths
-            -   name: KUBERNETES_TOKEN
-                valueFrom:
-                    secretKeyRef:
-                        key: token
-                        name: rhdh-kubernetes-token
-            -   name: RHDH_SESSION_SECRET
-                valueFrom:
-                    secretKeyRef:
-                        key: session-secret
-                        name: keycloak-plugin
-            -   name: RHBK_RHDH_REALM_METADATA_URL
-                valueFrom:
-                    secretKeyRef:
-                        key: realm-metadata-url
-                        name: keycloak-plugin
-            -   name: RHBK_RHDH_CLIENT_ID
-                valueFrom:
-                    secretKeyRef:
-                        key: client-id
-                        name: keycloak-plugin
-            -   name: RHBK_RHDH_CLIENT_SECRET
-                valueFrom:
-                    secretKeyRef:
-                        key: client-secret
-                        name: keycloak-plugin
-            -   name: RHBK_BASE_URL
-                valueFrom:
-                    secretKeyRef:
-                        key: rhbk-base-url
-                        name: keycloak-plugin
-            -   name: RHBK_RHDH_REALM
-                valueFrom:
-                    secretKeyRef:
-                        key: rhbk-rhdh-realm
-                        name: keycloak-plugin
-            -   name: RHDH_URL
-                valueFrom:
-                    secretKeyRef:
-                        key: rhdh-url
-                        name: keycloak-plugin
-            -   configMap:
-                    defaultMode: 420
-                    name: dynamic-plugins
-                    optional: true
-                name: dynamic-plugins
-            -   name: dynamic-plugins-npmrc
-                secret:
-                    defaultMode: 420
-                    optional: true
-                    secretName: dynamic-plugins-npmrc
-            image:
-                registry: registry.redhat.io
-                repository: rhdh/rhdh-hub-rhel9
-                tag: 1.3-124.1731508449
-        postgresql:
-            auth:
-                existingSecret: rhdh-postgres-auths
-            enabled: true
+                              loginRealm: ${RHBK_RHDH_REALM}
+                              realm: ${RHBK_RHDH_REALM}
+                              schedule:
+                                  frequency:
+                                      minutes: 5
+                                  initialDelay:
+                                      seconds: 30
+                                  timeout:
+                                      minutes: 3
+                  rules:
+                  -   allow:
+                      - Component
+                      - System
+                      - API
+                      - Template
+                      - Location
+                      - Resource
+                      - User
+                      - Group
+                      - Domain
+              integrations:
+                  github:
+                  -   host: github.com
+                      token: ${GITHUB_TOKEN}
+              proxy:
+                  #endpoints:
+                  #    /developer-hub:
+                  #        changeOrigin: true
+                  #        secure: true
+                  #        target: https://test-homepage.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+                  #target: https://test-homepage.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+              #reading:
+              #    allow:
+              #    -   host: '*.com'
+              #resources:
+              #    limits:
+              #        cpu: 1500m
+              #        memory: 2Gi
+              #    requests:
+              #        cpu: 500m
+              #        memory: 1Gi
+              signInPage: oidc
+              techdocs:
+                  builder: local
+                  generator:
+                      runIn: local
+                  publisher:
+                      type: local
+          extraEnvVars:
+          -   name: NODE_TLS_REJECT_UNAUTHORIZED
+              value: '0'
+          -   name: BACKEND_SECRET
+              valueFrom:
+                  secretKeyRef:
+                      key: backend-secret
+                      name: '{{ include "janus-idp.backend-secret-name" $ }}'
+          -   name: POSTGRESQL_ADMIN_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                      key: postgres-password
+                      name: rhdh-postgres-auths
+          -   name: GITHUB_TOKEN
+              valueFrom:
+                  secretKeyRef:
+                      key: github-token
+                      name: rhdh-github-token
+          -   name: ARGOCD_USER
+              valueFrom:
+                  secretKeyRef:
+                      key: argocd-username
+                      name: rhdh-argocd-auths
+          -   name: ARGOCD_RHDH_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                      key: argocd-rhdh-password
+                      name: rhdh-argocd-auths
+          -   name: KUBERNETES_TOKEN
+              valueFrom:
+                  secretKeyRef:
+                      key: token
+                      name: rhdh-kubernetes-token
+          -   name: RHDH_SESSION_SECRET
+              valueFrom:
+                  secretKeyRef:
+                      key: session-secret
+                      name: keycloak-plugin
+          -   name: RHBK_RHDH_REALM_METADATA_URL
+              valueFrom:
+                  secretKeyRef:
+                      key: realm-metadata-url
+                      name: keycloak-plugin
+          -   name: RHBK_RHDH_CLIENT_ID
+              valueFrom:
+                  secretKeyRef:
+                      key: client-id
+                      name: keycloak-plugin
+          -   name: RHBK_RHDH_CLIENT_SECRET
+              valueFrom:
+                  secretKeyRef:
+                      key: client-secret
+                      name: keycloak-plugin
+          -   name: RHBK_BASE_URL
+              valueFrom:
+                  secretKeyRef:
+                      key: rhbk-base-url
+                      name: keycloak-plugin
+          -   name: RHBK_RHDH_REALM
+              valueFrom:
+                  secretKeyRef:
+                      key: rhbk-rhdh-realm
+                      name: keycloak-plugin
+          -   name: RHDH_URL
+              valueFrom:
+                  secretKeyRef:
+                      key: rhdh-url
+                      name: keycloak-plugin
+          -   configMap:
+                  defaultMode: 420
+                  name: dynamic-plugins
+                  optional: true
+              name: dynamic-plugins
+          -   name: dynamic-plugins-npmrc
+              secret:
+                  defaultMode: 420
+                  optional: true
+                  secretName: dynamic-plugins-npmrc
+          image:
+              registry: registry.redhat.io
+              repository: rhdh/rhdh-hub-rhel9
+              tag: 1.3-124.1731508449
+      postgresql:
+          auth:
+              existingSecret: rhdh-postgres-auths
+          enabled: true

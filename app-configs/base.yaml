@@ -7,20 +7,21 @@ app:
 backend:
   baseUrl: ${RHDH_URL}
   cors:
-    origin: ${RHDH_URL}
+      origin: ${RHDH_URL}
   csp:
-    connect-src: #specifies valid sources for fetch requests, such as XMLHttpRequest, WebSocket, and EventSource. Essentially, it controls which endpoints your Backstage application is allowed to communicate with for data fetching, API calls, etc.
-      - 'self'
+      connect-src:
+      - '''self'''
       - 'http:'
       - 'https:'
-  reading:
-    allow:
-      - host: '*.redhatworkshops.io'
+      img-src:
+      - '''self'''
+      - 'data:'
+      - https://test-homepage.cluster-5clzf.5clzf.sandbox2839.opentlc.com
 
-catalog:
-  orphanStrategy: delete
-  rules:
-    - allow: [Component, System, API, Template, Location, Resource, User, Group, Domain]
+#catalog:
+#  orphanStrategy: delete
+#  rules:
+#    - allow: [Component, System, API, Template, Location, Resource, User, Group, Domain]
 
 resources:
   requests:
@@ -33,4 +34,4 @@ resources:
 # Allowed Hosts
 reading:
   allow:
-    - host: '*.redhatworkshops.io'
+    - host: '*.'
