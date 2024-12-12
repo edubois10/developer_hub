@@ -23,7 +23,7 @@ redhat-developer-hub:
         backstage:
           extraAppConfig:
             - filename: app-config-base.yaml
-              configMapRef: cm-app-configs.yaml
+              configMapRef: app-configs-base
           appConfig:
               #app:
               #    baseUrl: ${RHDH_URL}
