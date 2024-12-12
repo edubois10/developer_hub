@@ -6,4 +6,4 @@ permission:
     #policyFileReload: true
     #admin:
     #  superUsers:
-    #    - name: {{ .Values.plugins.rbac.superuser | lower }}
+    #    - name: user:default/admin
