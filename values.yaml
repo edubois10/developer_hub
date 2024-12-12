@@ -17,8 +17,8 @@ redhat-developer-hub:
                 package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
             -   disabled: false
                 package: ./dynamic-plugins/dist/backstage-community-plugin-redhat-argocd
-            #-   disabled: false
-            #    package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
+            -   disabled: false
+                package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
     upstream:
         backstage:
             appConfig:
@@ -33,17 +33,17 @@ redhat-developer-hub:
                           url: https://openshift-gitops-server-openshift-gitops.cluster-5clzf.5clzf.sandbox2839.opentlc.com
                           username: ${ARGOCD_USER}
                           password: ${ARGOCD_RHDH_PASSWORD}
-                #auth:
-                    #environment: development
-                    #providers:
-                    #    oidc:
-                    #        development:
-                    #            clientId: ${RHBK_RHDH_CLIENT_ID}
-                    #            clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
-                    #            metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
-                    #            prompt: auto
-                    #session:
-                    #    secret: superSecretSecret
+                auth:
+                  environment: development
+                  providers:
+                      oidc:
+                          development:
+                              clientId: ${RHBK_RHDH_CLIENT_ID}
+                              clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+                              metadataUrl: ${RHBK_RHDH_REALM_METADATA_URL}
+                              prompt: auto
+                  session:
+                      secret: superSecretSecret
                 backend:
                     baseUrl: ${RHDH_URL}
                     cors:
@@ -70,20 +70,20 @@ redhat-developer-hub:
                                         minutes: 5
                                     timeout:
                                         minutes: 3
-                        #keycloakOrg:
-                        #    default:
-                        #        baseUrl: https://keycloak-rhbk.cluster-5clzf.5clzf.sandbox2839.opentlc.com
-                        #        clientId: ${RHBK_RHDH_CLIENT_ID}
-                        #        clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
-                        #        loginRealm: ${RHBK_RHDH_REALM}
-                        #        realm: ${RHBK_RHDH_REALM}
-                        #        schedule:
-                        #            frequency:
-                        #                minutes: 5
-                        #            initialDelay:
-                        #                seconds: 30
-                        #            timeout:
-                        #                minutes: 3
+                        keycloakOrg:
+                            default:
+                                baseUrl: https://keycloak-rhbk.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+                                clientId: ${RHBK_RHDH_CLIENT_ID}
+                                clientSecret: ${RHBK_RHDH_CLIENT_SECRET}
+                                loginRealm: ${RHBK_RHDH_REALM}
+                                realm: ${RHBK_RHDH_REALM}
+                                schedule:
+                                    frequency:
+                                        minutes: 5
+                                    initialDelay:
+                                        seconds: 30
+                                    timeout:
+                                        minutes: 3
                     rules:
                     -   allow:
                         - Component
@@ -116,7 +116,7 @@ redhat-developer-hub:
                     requests:
                         cpu: 500m
                         memory: 1Gi
-                #signInPage: oidc
+                signInPage: oidc
                 techdocs:
                     builder: local
                     generator:
@@ -141,56 +141,56 @@ redhat-developer-hub:
                     secretKeyRef:
                         key: github-token
                         name: rhdh-github-token
-            #-   name: ARGOCD_USER
-            #    valueFrom:
-            #        secretKeyRef:
-            #            key: argocd-username
-            #            name: rhdh-argocd-auths
-            #-   name: ARGOCD_RHDH_PASSWORD
-            #    valueFrom:
-            #        secretKeyRef:
-            #            key: argocd-rhdh-password
-            #            name: rhdh-argocd-auths
-            #-   name: KUBERNETES_TOKEN
-            #    valueFrom:
-            #        secretKeyRef:
-            #            key: token
-            #            name: rhdh-kubernetes-token
+            -   name: ARGOCD_USER
+                valueFrom:
+                    secretKeyRef:
+                        key: argocd-username
+                        name: rhdh-argocd-auths
+            -   name: ARGOCD_RHDH_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                        key: argocd-rhdh-password
+                        name: rhdh-argocd-auths
+            -   name: KUBERNETES_TOKEN
+                valueFrom:
+                    secretKeyRef:
+                        key: token
+                        name: rhdh-kubernetes-token
             -   name: RHDH_SESSION_SECRET
                 valueFrom:
                     secretKeyRef:
                         key: session-secret
                         name: keycloak-plugin
-            #-   name: RHBK_RHDH_REALM_METADATA_URL
-            #    valueFrom:
-            #        secretKeyRef:
-            #            key: realm-metadata-url
-            #            name: keycloak-plugin
-            #-   name: RHBK_RHDH_CLIENT_ID
-            #    valueFrom:
-            #        secretKeyRef:
-            #            key: client-id
-            #            name: keycloak-plugin
-            #-   name: RHBK_RHDH_CLIENT_SECRET
-            #    valueFrom:
-            #        secretKeyRef:
-            #            key: client-secret
-            #            name: keycloak-plugin
-            #-   name: RHBK_BASE_URL
-            #    valueFrom:
-            #        secretKeyRef:
-            #            key: rhbk-base-url
-            #            name: keycloak-plugin
-            #-   name: RHBK_RHDH_REALM
-            #    valueFrom:
-            #        secretKeyRef:
-            #            key: rhbk-rhdh-realm
-            #            name: keycloak-plugin
-            #-   name: RHDH_URL
-            #    valueFrom:
-            #        secretKeyRef:
-            #            key: rhdh-url
-            #            name: keycloak-plugin
+            -   name: RHBK_RHDH_REALM_METADATA_URL
+                valueFrom:
+                    secretKeyRef:
+                        key: realm-metadata-url
+                        name: keycloak-plugin
+            -   name: RHBK_RHDH_CLIENT_ID
+                valueFrom:
+                    secretKeyRef:
+                        key: client-id
+                        name: keycloak-plugin
+            -   name: RHBK_RHDH_CLIENT_SECRET
+                valueFrom:
+                    secretKeyRef:
+                        key: client-secret
+                        name: keycloak-plugin
+            -   name: RHBK_BASE_URL
+                valueFrom:
+                    secretKeyRef:
+                        key: rhbk-base-url
+                        name: keycloak-plugin
+            -   name: RHBK_RHDH_REALM
+                valueFrom:
+                    secretKeyRef:
+                        key: rhbk-rhdh-realm
+                        name: keycloak-plugin
+            -   name: RHDH_URL
+                valueFrom:
+                    secretKeyRef:
+                        key: rhdh-url
+                        name: keycloak-plugin
             -   configMap:
                     defaultMode: 420
                     name: dynamic-plugins
