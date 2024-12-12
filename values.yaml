@@ -22,7 +22,7 @@ redhat-developer-hub:
     upstream:
         backstage:
           extraAppConfig:
-            - filename: app-config.base.yaml
+            - filename: app-config-base.yaml
               configMapRef: app-configs-base
           appConfig:
               #app:

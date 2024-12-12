@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: app-configs-{{ $path | base | replace ".yaml" "" | replace "app-configs/" "" | trunc 63 | trimSuffix "-" }}
 data:
-  {{ $path | replace "s/" "." }}: |-
+  {{ $path | replace "s/" "-" }}: |-
     {{- include "common.tplvalues.render" (dict "value" ($bytes | toString) "context" $) | nindent 4 }}
 ---
 {{- end }}
