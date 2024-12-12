@@ -1,0 +1,20 @@
+---
+result: CONDITIONAL
+roleEntityRef: 'role:default/team-blue'
+pluginId: catalog
+resourceType: catalog-entity
+permissionMapping:
+  - read
+conditions:
+  anyOf:
+    - rule: 'IS_ENTITY_KIND'
+      resourceType: 'catalog-entity'
+      params:
+        kinds:
+          - 'Group'
+          - 'User'
+    - rule: 'IS_ENTITY_OWNER'
+      resourceType: 'catalog-entity'
+      params:
+        claims:
+          - '$ownerRefs'
