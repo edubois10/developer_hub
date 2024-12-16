@@ -52,4 +52,4 @@ dynamicPluginsConfig:
 
 # Route
 route:
-  host: rhdh-redhat-develioper-hub-rhdh.apps.cluster-5clzf.5clzf.sandbox2839.opentlc.com
+  host: rhdh-redhat-developer-hub-rhdh.apps.cluster-5clzf.5clzf.sandbox2839.opentlc.com
