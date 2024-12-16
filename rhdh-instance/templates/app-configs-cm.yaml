@@ -5,6 +5,6 @@ metadata:
   name: app-configs-{{ $path | base | replace ".yaml" "" | replace "app-configs/" "" | trunc 63 | trimSuffix "-" }}
 data:
   {{ $path | replace "s/" "-" }}: |-
-   {{- $bytes | toString | nindent 4 }} 
+  {{- $bytes | toString | nindent 4 }} 
 ---
 {{- end }}

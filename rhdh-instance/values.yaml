@@ -49,3 +49,7 @@ dynamicPluginsConfig:
       disabled: true
     - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-rbac
       disabled: false
+
+# Route
+route:
+  host: rhdh-redhat-develioper-hub-rhdh.apps.cluster-5clzf.5clzf.sandbox2839.opentlc.com

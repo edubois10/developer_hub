@@ -6,6 +6,9 @@ spec:
   application:
     image: '{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}'
     dynamicPluginsConfigMapName: {{ .Values.dynamicPluginsConfig.name }}
+    route:
+      enabled: true
+      host: {{ .Values.route.host }}
     appConfig:
       configMaps:
         {{- range .Values.appConfigs }}
