@@ -94,62 +94,62 @@ redhat-developer-hub:
             -   name: POSTGRESQL_ADMIN_PASSWORD
                 valueFrom:
                     secretKeyRef:
-                        key: postgres-password
+                        key: POSTGRESQL_ADMIN_PASSWORD 
                         name: rhdh-postgres-auths
             -   name: GITHUB_TOKEN
                 valueFrom:
                     secretKeyRef:
-                        key: github-token
+                        key: GITHUB_TOKEN 
                         name: rhdh-github-token
             -   name: ARGOCD_USER
                 valueFrom:
                     secretKeyRef:
-                        key: argocd-username
+                        key: ARGOCD_USER
                         name: rhdh-argocd-auths
             -   name: ARGOCD_RHDH_PASSWORD
                 valueFrom:
                     secretKeyRef:
-                        key: argocd-rhdh-password
+                        key: ARGOCD_RHDH_PASSWORD
                         name: rhdh-argocd-auths
             -   name: KUBERNETES_TOKEN
                 valueFrom:
                     secretKeyRef:
-                        key: token
+                        key: KUBERNETES_TOKEN
                         name: rhdh-kubernetes-token
             -   name: RHDH_SESSION_SECRET
                 valueFrom:
                     secretKeyRef:
-                        key: session-secret
+                        key: RHDH_SESSION_SECRET 
                         name: keycloak-plugin
             -   name: RHBK_RHDH_REALM_METADATA_URL
                 valueFrom:
                     secretKeyRef:
-                        key: realm-metadata-url
+                        key: RHBK_RHDH_REALM_METADATA_URL
                         name: keycloak-plugin
             -   name: RHBK_RHDH_CLIENT_ID
                 valueFrom:
                     secretKeyRef:
-                        key: client-id
+                        key: RHBK_RHDH_CLIENT_ID
                         name: keycloak-plugin
             -   name: RHBK_RHDH_CLIENT_SECRET
                 valueFrom:
                     secretKeyRef:
-                        key: client-secret
+                        key: RHBK_RHDH_CLIENT_SECRET
                         name: keycloak-plugin
             -   name: RHBK_BASE_URL
                 valueFrom:
                     secretKeyRef:
-                        key: rhbk-base-url
+                        key: RHBK_BASE_URL
                         name: keycloak-plugin
             -   name: RHBK_RHDH_REALM
                 valueFrom:
                     secretKeyRef:
-                        key: rhbk-rhdh-realm
+                        key: RHBK_RHDH_REALM
                         name: keycloak-plugin
             -   name: RHDH_URL
                 valueFrom:
                     secretKeyRef:
-                        key: rhdh-url
+                        key: RHDH_URL
                         name: keycloak-plugin
             -   configMap:
                     defaultMode: 420
