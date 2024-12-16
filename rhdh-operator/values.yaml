@@ -1,0 +1,15 @@
+# Operator Subscription Settings
+subscription:
+  name: rhdh
+  namespace: rhdh-operator
+  channel: fast
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: rhdh-operator.v1.3.1
+
+# OperatorGroup Settings
+operatorGroup:
+  name: rhdh-operator
+  namespace: rhdh-operator
+  upgradeStrategy: Default
