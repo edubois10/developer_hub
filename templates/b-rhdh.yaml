@@ -1,0 +1,28 @@
+apiVersion: rhdh.redhat.com/v1alpha2
+kind: Backstage
+metadata:
+  name: developer-hub
+spec:
+  application:
+    image: '{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}'
+    dynamicPluginsConfigMapName: {{ .Values.dynamicPluginsConfig.name }}
+    appConfig:
+      configMaps:
+        {{- range .Values.appConfigs }}
+        - name: {{ . }}
+        {{- end }}
+    extraFiles:
+      mountPath: {{ .Values.application.extraFilesMountPath }}
+    extraEnvs:
+      envs:
+        {{- toYaml .Values.application.extraEnvs | nindent 8 }}
+      secrets:
+        {{- range .Values.application.secrets }}
+        - name: {{ . }}
+        {{- end }}
+    replicas: {{ .Values.application.replicas }}
+    route:
+      enabled: {{ .Values.application.routeEnabled }}
+  database:
+    authSecretName: {{ .Values.database.authSecretName }}
+    enableLocalDb: {{ .Values.database.enableLocalDb }}

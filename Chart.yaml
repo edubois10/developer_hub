@@ -1,13 +1,5 @@
----
 apiVersion: v2
-name: rhdh
-description: RedHat Developer Hub
-type: application
+name: rhdh-operator
+description: A Helm chart for deploying Red Hat Developer Hub (RHDH) Operator
 version: 1.0.0
-dependencies:
-  - name: redhat-developer-hub
-    repository: https://charts.openshift.io
-    version: 1.3.1
-  #- name: backstage
-  #  repository: https://redhat-developer.github.io/rhdh-chart
-  #  version: 2.16.4
+appVersion: 1.3.1
