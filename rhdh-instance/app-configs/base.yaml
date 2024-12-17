@@ -5,9 +5,9 @@ app:
     fullLogoWidth: 90px
 
 backend:
-  baseUrl: ${RHDH_URL}
+  baseUrl: https://rhdh-redhat-developer-hub-rhdh.apps.cluster-5clzf.5clzf.sandbox2839.opentlc.com
   cors:
-      origin: ${RHDH_URL}
+      origin: https://rhdh-redhat-developer-hub-rhdh.apps.cluster-5clzf.5clzf.sandbox2839.opentlc.com
   csp:
       connect-src:
       - '''self'''
