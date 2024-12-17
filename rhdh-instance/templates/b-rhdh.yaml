@@ -12,7 +12,7 @@ spec:
     appConfig:
       configMaps:
         {{- range .Values.appConfigs }}
-        - name: {{ . }}
+        - name: {{ .name }}
         {{- end }}
     extraFiles:
       mountPath: {{ .Values.application.extraFilesMountPath }}
