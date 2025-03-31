@@ -1,0 +1,28 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: hello-world
+  title: Hello World Template
+  description: A minimal template to test scaffolder functionality.
+spec:
+  owner: test-owner
+  type: service
+  parameters:
+    - title: Provide a component name
+      required:
+        - name
+      properties:
+        name:
+          title: Component Name
+          type: string
+          description: The name of your component.
+          default: hello-world-component
+  steps:
+    - id: fetch_skeleton
+      name: Fetch Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        targetPath: .
+  output:
+    entity: catalog-info.yaml
